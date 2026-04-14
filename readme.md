@@ -1,28 +1,27 @@
-# Telegram bot for RPI
+# Bot de Telegram para Raspberry PI
 
-A Telegram bot for a Raspberry Pi that provides real-time monitoring and management of system resources, Docker, and [Pi-hole](https://github.com/pi-hole/pi-hole).
+Un bot de Telegram para Raspberry PI que proporciona monitoreo a tiempo real y administracion de Docker, [Pi-hole](https://github.com/pi-hole/pi-hole) y recursos del sistema.
 
-## Features
+## Características
 
-### Docker container management
-- Real-time updates of container status changes
-- List all containers and their status
-- Remotely start and stop containers
+### Administración de contenedored de Docker
+- Notificationes a tiempo real de cambios de estado de los contenedores
+- Lista todos los contenedore y sus estados
+- Arranca y detiene cualquier contenedor de forma remota
 
-### Pi-Hole monitoring
-- Real-time notifications of blocked DNS request
-- Using MariaDB:
-    - Mark domains not to be alerted again
-    - Collect statistics of blocked requests
-    - Get statistics of blocked domains
+### Monitoreo de Pi-Hole
+- Notificaciones a tiempo real de solicitudes DNS bloqueadas
+- Usando MariaDB:
+    - Marca dominios para que no se vuelvan a alertar en Telegram
+    - Colecciona estadísticas de los dominios bloqueados
 
-### System management
-- System power-on and power-off notifications
-- Over-heating notifications (toggleable)
-- High CPU usage notifications (toggleable)
-- System status command
+### Administración del sistema
+- Notificaciones de encencido y apagado del sistema
+- Notificaciones de sobrecalentamiento (desactibables)
+- Notificaciones de uso de CPU alto (desactibables)
+- Visualización de estado del sistema
 
-## Requirements
+## Requisitos
 
 - Python3.8+
 - Docker
@@ -30,36 +29,39 @@ A Telegram bot for a Raspberry Pi that provides real-time monitoring and managem
 - Pi-Hole
 - lm-sensors
 
-### Python dependencies
+### Dependencias de Python
 
 - python-telegram-bot
 - mariadb
 - docker
 - psutil
 
-## Configuration
+## Configuración / Instalación
 
-1. Create a bot on Telegram with the next commands:
-    - `piholedb`: Prints all the domains added the DAA table with more than 10 blocks
-    - `docker_ps`: Prints a `docker ps`-like text
-    - `docker_start`: Creates a button for each container to start them
-    - `docker_stop`: Creates a button for each container to stop them
-    - `docker_logs`: Creates a button for each container that prints its last 10 lines of logs
-    - `logs_cpu`: Toggles on and off the high CPU usage notifications
-    - `logs_temps`: Toggles on and off the high CPU temperature notifications
-    - `status`: Prints CPU usage and temperature, RAM usage, Disk usage, uptime, and the top 5 CPU and RAM consuming processes
+1. Crea un bot de Telegram con los siguientes comandos:
+    | Comando        | Descripción                                                                                        |
+    | -------------- | -------------------------------------------------------------------------------------------------- |
+    | `piholedb`     | Muestra todos los dominios que se han bloqueado más de 10 veces                                    |
+    | `docker_ps`    | Muesta el estado de todos los contenedores de forma parecida a `docker ps`                         |
+    | `docker_start` | Crea un botón por cada contenedor para poder arrancarlos                                           |
+    | `docker_stop`  | Crea un botón por cada contenedor para poder pararlos                                              |
+    | `docker_logs`  | Crea un botón por cada contenedor para poder ver sus últimas 10 líneas de logs                     |
+    | `logs_cpu`     | Detiene o reactiva las notificaciones de uso de CPU alto                                           |
+    | `logs_temps`   | Detiene o reactiva las notificaciones de temperatura de CPU alta                                   |
+    | `status`       | Muesta el uso y temperatura de la CPU, uso de RAM, uptime, y los 5 procesos que usan más CPU y RAM |
 
-1. Create the next files
+1. Crea los siguientes archivos
 
-    - `/home/pi/bot/token`: File with the Telegram bot token
-    - `/home/pi/bot/group_id`: File with the Telegram group id where the bot will be used
-    - `/home/pi/docker/mariadb/user`: File with the username of MariaDB
-    - `/home/pi/docker/mariadb/pass`: File with the password of MariaDB
+    - `/home/pi/bot/token`: Archivo con el token del bot de Telegram
+    - `/home/pi/bot/group_id`: Archivo con el group_id del grupo en el que está en bot
+    - `/home/pi/docker/mariadb/user`: Archivo con el nombre de usuario de MariaDB
+    - `/home/pi/docker/mariadb/pass`: Archivo con la contraseña de MariaDB
 
-1. All the paths are absolute on the project, so they will probably need to be changed
-1. Create the SQL database from the [pihole.sql](./pihole.sql) file
-1. For automatic start-up of the bot, and the power-on and power-off messages, add the next systemd services:
-    - [Bot startup](./services/bot_start.service)
-    - [Power-on notification](./services/notificacion-encendido.service)
-    - [Power-off notification](./services/notificacion-apagado.service)
-1. Create a `python -m venv` under the python directory and install the python deps
+1. Todos los paths en el proyecto son absolutos, por lo que seguramente haga falta cambiarlos
+1. Crea la base de datos usando el archivo [pihole.sql](./pihole.sql)
+1. Para que el bot arranque de forma automática, las notificaciones de encendido y apagado, añade los siguientes servicios de systemd:
+    - [Arranque del bot](./services/bot_start.service)
+    - [Notificación de encendido](./services/notificacion-encendido.service)
+    - [Notificación de apagado](./services/notificacion-apagado.service)
+1. Crea un `python -m venv` en el directorio de python y descarga las dependencias de python
+1. Arranca el servicio `bot_start` para poner el bot en marcha
