@@ -1,0 +1,27 @@
+DROP DATABASE IF EXISTS pihole;
+CREATE DATABASE pihole;
+USE pihole;
+
+CREATE TABLE DAA (
+    ID BIGINT NOT NULL AUTO_INCREMENT,
+    dominio VARCHAR(255) NOT NULL UNIQUE,
+    creado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    accedido DATETIME DEFAULT CURRENT_TIMESTAMP,
+    accesos BIGINT NOT NULL DEFAULT 0,
+    PRIMARY KEY(ID)
+);
+
+DELIMITER $$
+
+CREATE PROCEDURE select_and_update(IN buscando VARCHAR(255))
+BEGIN
+    UPDATE DAA SET accedido = NOW(), accesos = accesos + 1 WHERE dominio = buscando;
+
+    IF ROW_COUNT() = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dominio no guardado';
+    END IF;
+
+    SELECT * FROM DAA WHERE dominio = buscando;
+END$$
+
+DELIMITER ;

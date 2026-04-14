@@ -1,0 +1,12 @@
+[Unit]
+Description=Notificacion por telegram cuando se enciende el sistema
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/pi/bot/mensaje-encendido.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

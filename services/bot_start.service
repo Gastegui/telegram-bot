@@ -1,0 +1,13 @@
+[Unit]
+Description=Pone en marcha los bots que necesitan root
+After=network.target docker.service
+
+[Service]
+Type=simple
+ExecStart=/home/pi/bot/start_root.sh
+User=root
+Group=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
