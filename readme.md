@@ -4,9 +4,9 @@ Un bot de Telegram para Raspberry PI que proporciona monitoreo a tiempo real y a
 
 ## Características
 
-### Administración de contenedored de Docker
-- Notificationes a tiempo real de cambios de estado de los contenedores
-- Lista todos los contenedore y sus estados
+### Administración de contenedores de Docker
+- Notificaciones a tiempo real de cambios de estado de los contenedores
+- Lista todos los contenedores y sus estados
 - Arranca y detiene cualquier contenedor de forma remota
 
 ### Monitoreo de Pi-Hole
@@ -16,9 +16,9 @@ Un bot de Telegram para Raspberry PI que proporciona monitoreo a tiempo real y a
     - Colecciona estadísticas de los dominios bloqueados
 
 ### Administración del sistema
-- Notificaciones de encencido y apagado del sistema
-- Notificaciones de sobrecalentamiento (desactibables)
-- Notificaciones de uso de CPU alto (desactibables)
+- Notificaciones de encendido y apagado del sistema
+- Notificaciones de sobrecalentamiento (desactivables)
+- Notificaciones de uso de CPU alto (desactivables)
 - Visualización de estado del sistema
 
 ## Requisitos
@@ -59,9 +59,8 @@ Un bot de Telegram para Raspberry PI que proporciona monitoreo a tiempo real y a
 
 1. Todos los paths en el proyecto son absolutos, por lo que seguramente haga falta cambiarlos
 1. Crea la base de datos usando el archivo [pihole.sql](./pihole.sql)
-1. Para que el bot arranque de forma automática, las notificaciones de encendido y apagado, añade los siguientes servicios de systemd:
+1. Crea un `python -m venv` en el directorio de python y descarga las dependencias de python
+1. Para que el bot arranque de forma automática, las notificaciones de encendido y apagado, añade y activa los siguientes servicios de systemd:
     - [Arranque del bot](./services/bot_start.service)
     - [Notificación de encendido](./services/notificacion-encendido.service)
     - [Notificación de apagado](./services/notificacion-apagado.service)
-1. Crea un `python -m venv` en el directorio de python y descarga las dependencias de python
-1. Arranca el servicio `bot_start` para poner el bot en marcha
