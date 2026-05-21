@@ -374,6 +374,8 @@ async def status(update: Update, context: CallbackContext):
     disk_root_used = shutil.disk_usage("/").used / 1024**3
     disk_data_total = shutil.disk_usage("/mnt/data").total / 1024**3
     disk_data_used = shutil.disk_usage("/mnt/data").used / 1024**3
+    disk_hdd_total = shutil.disk_usage("/mnt/hdd").total / 1024**3
+    disk_hdd_used = shutil.disk_usage("/mnt/hdd").used / 1024**3
     
     uptime_seconds = int(time.time() - psutil.boot_time())
 
@@ -403,6 +405,7 @@ CPU: {cpu}% / 400%
 RAM: {ram_available:.2f}GB / {ram_total:.2f}GB
 Uso /: {disk_root_used:.2f}GB / {disk_root_total:.2f}GB
 Uso /mnt/data: {disk_data_used:.2f}GB / {disk_data_total:.2f}GB
+Uso /mnt/hdd: {disk_hdd_used:.2f}GB / {disk_hdd_total:.2f}GB
 Uptime: {uptime_str}
 
 Top 5 procs (CPU):
